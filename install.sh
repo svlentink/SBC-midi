@@ -30,7 +30,8 @@ echo Creating script $SCRIPTNAME
 cat <<EOF> $SCRIPTPATH
 #!/bin/bash
 echo Starting the sound processing engine
-nohup fluidsynth \
+[[ -z "\$(ps aux|grep -i fluid|grep -v grep)" ]] \
+&& nohup fluidsynth \
   --audio-driver=alsa \
   --audio-driver=alsa -o audio.alsa.device hw:0 \
   --gain=\$(cat $VOLUMELOC) \
