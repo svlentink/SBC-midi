@@ -33,7 +33,7 @@ echo Starting the sound processing engine
 [[ -z "\$(ps aux|grep -i fluid|grep -v grep)" ]] \
 && nohup fluidsynth \
   --audio-driver=alsa \
-  --audio-driver=alsa -o audio.alsa.device hw:0 \
+  -o audio.alsa.device=hw:0 \
   --gain=\$(cat $VOLUMELOC) \
   --server \
   --no-shell \
@@ -67,7 +67,7 @@ chmod +x $SCRIPTPATH
  && sed -i 's/exit/\/usr\/bin\/enableMidiMusic\nexit/g' /etc/rc.local #running it at startup
 
 echo You can change the volume at $VOLUMELOC which requires a reboot
-echo -n "3.7" > $VOLUMELOC
+echo -n "2.2" > $VOLUMELOC
 
 }
 wrappedInFunction # enables curl | sh
