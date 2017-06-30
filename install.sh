@@ -57,8 +57,8 @@ INPUTkeyword="usb"
 OUTPUTkeyword="FLUID" #"Midi Through"
 MidiIN=\$(aconnect -i | grep -i "\$INPUTkeyword" | head -1 | awk '{print \$2;}')"0" # something like '20:'"0" = 20:0
 MidiOUT=\$(aplaymidi -l | grep -i "\$OUTPUTkeyword" | head -1 | awk '{print \$1;}') # something like '14:0'
-echo We will use $MidiIN as input and $MidiOUT as output
-aconnect $MidiIN $MidiOUT
+echo We will use \$MidiIN as input and \$MidiOUT as output
+aconnect \$MidiIN \$MidiOUT
 exit 0
 EOF
 chmod +x $SCRIPTPATH
