@@ -25,7 +25,7 @@ echo allready installed prereq.
 fi
 
 echo We are going to play a sound, to test your speakers or headphone
-speaker-test -t wav -c 2 -l 2
+speaker-test -t wav -c 2 -l 2 || true # prevent failure if audio device is used by fluidsynth
 
 SCRIPTNAME=enableMidiMusic
 VOLUMELOC=/keyboard-volume
