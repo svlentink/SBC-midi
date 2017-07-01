@@ -10,14 +10,19 @@ set -e
 
 function wrappedInFunction {
 
+if [[ -z "$(which fluidsynth)" ]]; then
 echo installing all prereq.
 apt update
 apt install -y \
   alsa-utils \
+  espeak \
   fluidsynth \
   fluid-soundfont-gm
 apt install -y linux-lowlatency || true #some arm compiled debian based distros may not have this
 apt remove -y pulseaudio || true
+else
+echo allready installed prereq.
+fi
 
 echo We are going to play a sound, to test your speakers or headphone
 speaker-test -t wav -c 2 -l 2
@@ -39,7 +44,7 @@ echo Starting the sound processing engine
   --no-shell \
   /usr/share/sounds/sf2/FluidR3_GM.sf2 \
   > /dev/null 2>&1 &
-sleep 10
+sleep 20
 echo The midi processing engine should be up by now
 
 #echo Listing all audio devices:
@@ -54,20 +59,36 @@ aconnect -i
 echo Listing output connections:
 aconnect -o
 
+function communicateErr {
+  echo \$@
+  espeak --stdout \$@ | aplay || true
+  sleep 60
+  ./\$0
+}
+
 INPUTkeyword="usb"
 OUTPUTkeyword="FLUID" #"Midi Through"
 MidiIN=\$(aconnect -i | grep -i "\$INPUTkeyword" | head -1 | awk '{print \$2;}')"0" # something like '20:'"0" = 20:0
 MidiOUT=\$(aplaymidi -l | grep -i "\$OUTPUTkeyword" | head -1 | awk '{print \$1;}') # something like '14:0'
+
+[[ -z "\$MidiIN" ]] \
+  && communicateErr "Input missing, trying again in a minute" \
+  && exit 1
+[[ -z "\$MidiOUT" ]] \
+  && communicateErr "Output missing, trying again in a minute" \
+  && exit 1
+
 echo We will use \$MidiIN as input and \$MidiOUT as output
 aconnect \$MidiIN \$MidiOUT
+
 exit 0
 EOF
 chmod +x $SCRIPTPATH
 [[ -z "$(grep -i enableMidi /etc/rc.local)" ]] \
- && sed -i 's/exit/\/usr\/bin\/enableMidiMusic\nexit/g' /etc/rc.local #running it at startup
+ && sed -i 's/exit/sleep\ 10\ &&\ \/usr\/bin\/enableMidiMusic\nexit/g' /etc/rc.local #running it at startup
 
 echo You can change the volume at $VOLUMELOC which requires a reboot
-echo -n "2.2" > $VOLUMELOC
+echo -n "1.5" > $VOLUMELOC
 
 }
 wrappedInFunction # enables curl | sh
