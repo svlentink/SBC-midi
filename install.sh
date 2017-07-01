@@ -76,10 +76,12 @@ if [[ -z "\$MidiOUT" ]]; then
   aconnect -o
   
   exit 1
-else
-  echo We will use \$MidiIN as input and \$MidiOUT as output
-  aconnect \$MidiIN \$MidiOUT
 fi
+
+[[ -z "\$(aconnect -l | grep 'Connected From')" ]] \
+  && echo We will use \$MidiIN as input and \$MidiOUT as output \
+  && aconnect \$MidiIN \$MidiOUT
+
 
 exit 0
 EOF

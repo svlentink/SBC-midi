@@ -52,3 +52,20 @@ Other links:
 + https://stimresp.wordpress.com/2016/02/08/using-a-raspberry-pi-as-usb-midi-host/
 + https://rafalcieslak.wordpress.com/2012/08/29/usb-midi-controllers-and-making-music-with-ubuntu/
 
+### Current progress
+
+This script installs a cronjob that runs every minute,
+to verify all conditions.
+
+It should establish the following after about 2.5 minutes after booting
+(after the installation):
+
+```shell
+root@chip:/home/chip# aconnect -l | tail -6
+client 20: 'USB Keystation 49e' [type=kernel]
+    0 'USB Keystation 49e MIDI 1'
+        Connecting To: 128:0
+client 128: 'FLUID Synth (667)' [type=user]
+    0 'Synth input port (667:0)'
+        Connected From: 20:0
+```
