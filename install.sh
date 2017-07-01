@@ -85,7 +85,7 @@ exit 0
 EOF
 chmod +x $SCRIPTPATH
 [[ -z "$(grep -i enableMidi /etc/rc.local)" ]] \
- && sed -i 's/exit/sleep\ 10\ &&\ \/usr\/bin\/enableMidiMusic\nexit/g' /etc/rc.local #running it at startup
+ && sed -i 's/exit/sleep\ 10\ \&\&\ \/usr\/bin\/enableMidiMusic\nexit/g' /etc/rc.local #running it at startup
 
 echo You can change the volume at $VOLUMELOC which requires a reboot
 echo -n "1.5" > $VOLUMELOC
