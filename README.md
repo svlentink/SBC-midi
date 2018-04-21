@@ -21,8 +21,10 @@ screen $(ls -tr /dev/tty*|grep -i usb|tail -1) 115200
 If your device has WIFI, and you want to connect to it:
 ```shell
 nmcli dev wifi list
-nmcli dev wifi connect YOUR_WIFI password WIFI_PASSWORD
+nmcli dev wifi connect YOUR_WIFI_SSID password WIFI_PASSWORD
 ```
+or do it via
+[/etc/network/interfaces](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-occidentalis)
 
 Now that we have internet connection,
 a MIDI input device connected and headphones/speakers,
