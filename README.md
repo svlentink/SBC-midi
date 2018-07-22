@@ -41,6 +41,7 @@ The following can be used for debugging or further development:
 + Quickstart: http://sandsoftwaresound.net/qsynth-fluidsynth-raspberry-pi/
 
 Other links:
++ https://github.com/zynthian
 + https://www.hackster.io/11802/c-h-i-p-midi-arpeggiating-synth-e311ab
 + https://docs.getchip.com/chip.html#headless-chip
 + https://docs.getchip.com/chip.html#control-chip-using-a-serial-terminal
